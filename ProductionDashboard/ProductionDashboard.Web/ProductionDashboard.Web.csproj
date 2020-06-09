@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>WarOfDevil</Authors>
+    <Product>Live Production Dashboard</Product>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+</Project>
