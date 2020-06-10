@@ -12,7 +12,6 @@ namespace ProductionDashboard.Web
     {
         public static void Main(string[] args)
         {
-            //CreateHostBuilder(args).Build().Run();
             PrintInstructions();
             BuildWebHost(args).Run();
         }
@@ -40,12 +39,12 @@ namespace ProductionDashboard.Web
             }
         }
 
-        private static string[] GetAllLocalIPv4(NetworkInterfaceType _type)
+        private static string[] GetAllLocalIPv4(NetworkInterfaceType type)
         {
             List<string> ipAddrList = new List<string>();
             foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces())
             {
-                if (item.NetworkInterfaceType == _type && item.OperationalStatus == OperationalStatus.Up)
+                if (item.NetworkInterfaceType == type && item.OperationalStatus == OperationalStatus.Up)
                 {
                     foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses)
                     {
@@ -64,14 +63,5 @@ namespace ProductionDashboard.Web
                 .UseStartup<Startup>()
                 .UseUrls("http://*:80")
                 .Build();
-
-
-
-        //public static IHostBuilder CreateHostBuilder(string[] args) =>
-        //    Host.CreateDefaultBuilder(args)
-        //        .ConfigureWebHostDefaults(webBuilder =>
-        //        {
-        //            webBuilder.UseStartup<Startup>();
-        //        });
     }
 }
