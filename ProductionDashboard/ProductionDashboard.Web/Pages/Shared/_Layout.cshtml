@@ -5,14 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>@ViewData["Title"]</title>
- 
-    <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="~/css/adminlte.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-</head>
-<body class="hold-transition layout-top-nav">
-    <div class="wrapper">
 
+    <link rel="stylesheet" href="~/plugins/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="~/css/custom_marel.css">
+</head>
+    <body>
         <!-- Top Menu -->
         <partial name="_NavBar" />
 
@@ -21,20 +19,9 @@
             @RenderBody()
         </div>
 
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
-            <div class="p-3">
-                <h5>Title</h5>
-                <p>Sidebar content</p>
-            </div>
-        </aside>
-    </div>
+        <script src="~/plugins/jquery/jquery.js"></script>
+        <script src="~/plugins/bootstrap/js/bootstrap.bundle.js"></script>
 
-    <script src="~/plugins/jquery/jquery.min.js"></script>
-    <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/adminlte.min.js"></script>
-
-    @RenderSection("Scripts", required: false)
-</body>
+        @RenderSection("Scripts", required: false)
+    </body>
 </html>
