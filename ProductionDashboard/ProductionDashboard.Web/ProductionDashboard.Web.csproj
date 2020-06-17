@@ -5,6 +5,10 @@
     <Authors>WarOfDevil</Authors>
     <Product>Live Production Dashboard</Product>
     <Version>1.0.0</Version>
+    <PublishReadyToRun>true</PublishReadyToRun>
+    <PublishReadyToRunShowWarnings>true</PublishReadyToRunShowWarnings>
+    <PublishSingleFile>true</PublishSingleFile>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>  
   </PropertyGroup>
 
   <ItemGroup>

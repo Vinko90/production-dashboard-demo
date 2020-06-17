@@ -18,13 +18,18 @@ echo.
 
 echo ---- Building Application ----
 echo.
+RMDIR /s /q ProductionDashboard\ProductionDashboard.Web\bin\Release
 CD ProductionDashboard
-dotnet publish --runtime win-x64
+dotnet publish -c Release
 echo.
 
 echo ---- Packaging Release ----
 echo.
 SET "ReleaseFile=ProductionDashboard_%version%.zip"
-CD ProductionDashboard.Web\bin\Debug\netcoreapp3.1\win-x64
-DEL /Q "%ReleaseFile%"
+CD ProductionDashboard.Web\bin\Release\netcoreapp3.1\win-x64\publish
+echo start chrome "http://localhost:5000" >> LaunchMe.bat
+echo call ProductionDashboard.Web.exe >> LaunchMe.bat
+CD ..
 7z a %ReleaseFile% ./publish/*
+
+pause
