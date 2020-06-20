@@ -4,6 +4,15 @@
     ViewData["Title"] = "Production Dashboard";
 }
 
-<div class="content">
-    <p>Dashboard Area</p>
+<div class="container-fluid">
+    <h1>Float grid demo</h1>
+    <div>
+        <a class="btn btn-primary" onClick="addNewWidget()" href="#">Add Widget</a>
+    </div>
+    <br><br>
+    <div class="grid-stack"></div>
 </div>
+
+@section Scripts{
+    <script src="~/js/gridstack_core.js"></script>
+}
