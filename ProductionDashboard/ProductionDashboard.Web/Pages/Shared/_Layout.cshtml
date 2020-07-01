@@ -6,29 +6,35 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>@ViewData["Title"]</title>
 
-    <link rel="stylesheet" href="~/plugins/bootstrap/css/bootstrap.css">
-
     <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
-
+    <link rel="stylesheet" href="~/css/custom_bootstrap.css">
     <link rel="stylesheet" href="~/plugins/gridstack/gridstack.css" />
     <link rel="stylesheet" href="~/css/custom_gridstack.css" />
 
-    <link rel="stylesheet" href="~/css/custom_marel.css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
-<body>
-    <!-- Top Menu -->
-    <partial name="_NavBar" />
+<body class="hold-transition sidebar-collapse layout-top-nav">
 
-    <!-- Razer Content -->
-    <div class="content-wrapper">
-        @RenderBody()
+    <div class="wrapper">
+        <!-- Navigation Bar -->
+        <partial name="_NavBar" />
+
+        <!-- Module List Menu -->
+        <partial name="_ModuleList" />
+
+        <!-- Dashboard Content -->
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+
+        <!-- Data Bar -->
+        <partial name="_DataBar" />
     </div>
 
     <script src="~/plugins/jquery/jquery.js"></script>
     <script src="~/plugins/jquery-ui/jquery-ui.js"></script>
-
     <script src="~/plugins/bootstrap/js/bootstrap.bundle.js"></script>
-
+    <script src="~/js/adminlte.js"></script>
     <script src="~/plugins/gridstack/gridstack.all.js"></script>
     <script src="~/plugins/gridstack/gridstack.jQueryUI.js"></script>
 
