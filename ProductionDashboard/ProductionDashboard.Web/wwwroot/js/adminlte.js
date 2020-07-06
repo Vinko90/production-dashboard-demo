@@ -1439,7 +1439,8 @@
         $.get(this._settings.source, this._settings.params, function (response) {
           if (this._settings.loadInContent) {
             if (this._settings.sourceSelector != '') {
-              response = $(response).find(this._settings.sourceSelector).html();
+                response = $(response).find(this._settings.sourceSelector)
+                    ();
             }
 
             this._parent.find(this._settings.content).html(response);
