@@ -6,37 +6,82 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>@ViewData["Title"]</title>
 
+    <link rel="stylesheet" href="~/plugins/bootstrap/css/bootstrap.css">
+
     <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="~/css/custom_bootstrap.css">
+
     <link rel="stylesheet" href="~/plugins/gridstack/gridstack.css" />
     <link rel="stylesheet" href="~/css/custom_gridstack.css" />
 
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="~/plugins/sswitch/css/style.css">
+
+    <link rel="stylesheet" href="~/css/custom.css">
 </head>
-<body class="hold-transition sidebar-collapse layout-top-nav">
+<body class="view-mode">
 
-    <div class="wrapper">
-        <!-- Navigation Bar -->
-        <partial name="_NavBar" />
+    <!-- Navigation Bar -->
+    <partial name="_NavBar" />
 
-        <!-- Module List Menu -->
-        <partial name="_ModuleList" />
+    <div class="content-wrapper">
 
-        <!-- Dashboard Content -->
-        <div class="content-wrapper">
+        <input type="checkbox" name="checkboxName" class="checkbox" />
+
+        <div class="container-fluid p-0 m-0">
+            <!-- Module List Menu -->
+            <partial name="_ModuleList" />
+
+            <!-- Dashboard Content -->
             @RenderBody()
+
+            <!-- Data Bar -->
+            <partial name="_DataBar" />
         </div>
 
-        <!-- Data Bar -->
-        <partial name="_DataBar" />
+
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="mModal" tabindex="-1" role="dialog" aria-labelledby="mModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mModalLabel">Module Modal  title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script src="~/plugins/jquery/jquery.js"></script>
     <script src="~/plugins/jquery-ui/jquery-ui.js"></script>
+
     <script src="~/plugins/bootstrap/js/bootstrap.bundle.js"></script>
-    <script src="~/js/adminlte.js"></script>
-    <script src="~/plugins/gridstack/gridstack.all.js"></script>
+
+    <script src="~/plugins/gridstack/gridstack.js"></script>
     <script src="~/plugins/gridstack/gridstack.jQueryUI.js"></script>
+
+
+    <script src="~/plugins/sswitch/js/Sswitch.js"></script>
+
+    <script src="~/plugins/filesaver/dist/FileSaver.min.js"></script>
+
+    <script src="~/plugins/chartjs/Chart.min.js"></script>
+
+    <script src="~/js/gridstack_core.js"></script>
+
+    <script src="~/js/custom.js"></script>
+
+
 
     @RenderSection("Scripts", required: false)
 </body>

@@ -1,6 +1,30 @@
-/*
-    Created by WarOfDevil - 11/07/2020
-*/
+/* ##################################*/
+/*          TYPOGRAPHY               */
+/* ##################################*/
+
+
+h1 {
+
+    font-size: 18pt;
+    font-weight: 700;
+}
+
+h2 {
+
+    font-size: 14pt;
+    font-weight: 700;
+}
+
+h3 {
+
+    font-size: 12pt;
+}
+
+body {font-size: 10pt;
+    font-family: 'Segoe UI', 'Open Sans', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
 
 /* ##################################*/
 /*          NAVIGATION BAR           */
@@ -181,25 +205,37 @@
     background-color: #384d70;
 }
 
-
-
+/* ##################################*/
+/*              SWITCH MODE          */
+/* ##################################*/
+.s-switch {
+    padding: 2px 3px;
+    margin: 5px; 
+ }
+ 
 /* ##################################*/
 /*          MODULE LIST              */
 /* ##################################*/
 
 /* The side navigation menu */
 .module-list {
-    height: 50%; /* 100% Full-height */
+    height: 100%; /* 100% Full-height */
+    height: 100vh;
     width: 0; /* 0 width - change this with JavaScript */
-    position: fixed; /* Stay in place */
+     /* Stay in place */
     z-index: 1; /* Stay on top */
-    top: 10%; /* Stay at the top */
+    top: 0%; /* Stay at the top */
     left: 0;
-    background-color: #111; /* Black*/
+    background-color: #f2f2f2; 
     overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 60px; /* Place content 60px from the top */
+    padding-top: 0px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+    border: 1px solid black;
+    float: left;
+    text-align: center;
 }
+
+
 
 /* The navigation menu links */
 .module-list a {
@@ -211,8 +247,198 @@
     transition: 0.3s;
 }
 
+.module-list .newWidget {
+    border-top: 1px solid;
+    padding: 10px 0;
+}
+.module-list .newWidget:last-child {
+    border-bottom: 1px solid;
+}
+
     /* When you mouse over the navigation links, change their color */
 .module-list a:hover {
     color: #f1f1f1;
 }
-    
+
+.module-list #menuToggle{
+    font-size: 18px;
+}
+
+.module {
+    background-color: #ffffff;
+    font-size: 10pt;
+    border: 1px solid #3A4E71;
+}
+
+.module-title {
+    height: 40px;
+    color: #ffffff;
+    padding: 5px;
+}
+
+.module-title .notification {
+    border: 1px solid transparent;
+    border-radius: 50%;
+    background-color: #ffffff;
+    float: left;
+    height: 25px;
+    width: 25px;
+    margin: 1px;
+    font-size: 14px;
+    color: #3A4E71;
+}
+.module-title h3 {
+    line-height: 1;
+    padding-top: 5px;
+    font-size: 11pt;
+}
+
+.module-content {
+    background-color: #ffffff;
+    color: #a3b7c7;
+    font-style: italic;
+    text-align: left;
+    padding: 5px 0px 5px 5px;
+}
+
+.module-content h3{ 
+    color: #3A4E71;
+    margin-bottom: 0;
+    margin-top: 5px;
+    font-size: 10pt;
+
+}
+
+.module-content label {
+    margin-left: 7px;
+    margin-bottom: 0;
+    width: 90%;
+}
+.module-content label span {
+    float: right;
+}
+
+
+.module-offline {
+    background-color: #88ADCA;
+    border-color: #88ADCA;
+}
+.module-connected {
+    background-color: #3A4E71;
+    border-color: #3A4E71;
+}
+.module-warning {
+    background-color: #FEB012;
+    border-color: #FEB012;
+}
+.module-fatal {
+    background-color: #C41D2E;
+    border-color: #C41D2E;
+}
+
+
+/* ##################################*/
+/*          DATA MENU                */
+/* ##################################*/
+
+.data-menu {
+   border: 1px solid black;
+    border-right: 0;
+    height: 100%;
+    width: 150px; /* 0 width - change this with JavaScript */
+    z-index: 1; /* Stay on top */
+    background-color: #f2f2f2; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 0px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+    display: flex;
+    align-items: stretch;
+    right: 0;
+    position: fixed;
+    text-align: left;
+}
+
+.data-menu .close {
+    position: absolute;
+    top: 0;
+    right: 15px;
+    font-size: 36px !important;
+    margin-left: 50px;
+    color: #000;    
+}
+
+.data-menu h1,.data-menu h2 {
+    text-align: center;
+}
+
+.data-menu .row {
+    margin-bottom: 5px;
+}
+.data-menu .row .col-4 {
+    padding-right: 0 !important;
+}
+
+
+.data-menu .row .col-8.text-left{
+    font-weight: bold;
+}
+
+
+
+
+.table-notifications th{
+    background-color: #3A4E71;
+    color: #fff;
+    text-align: center;
+}
+
+.table-notifications td{
+    background-color: white;
+    color: #88ADCA
+}
+
+.table-notifications th, .table-notifications td {
+  
+    border-left: 1px solid #88ADCA;
+    border-bottom: 1px solid #88ADCA !important;
+    padding: 5px;
+    font-size: 10pt;
+}
+
+.table-notifications th:last-child, .table-notifications td:last-child {
+    border-right: 1px solid #88ADCA;
+}
+
+
+
+
+
+
+/* ALERTS */ 
+.alert {
+    display: inline-block;
+    padding: 2px 5px;
+    color: #ffffff;
+    margin:0;
+    font-weight: bold;
+    min-width: 70px;
+    text-align: center;
+}
+.warning {
+    background-color: #FEB012;
+}
+.fatal {
+    background-color: #C41D2E;
+}
+
+.online {
+    background-color: #C41D2E;
+}
+
+.edit-mode .newWidget {
+    cursor: move;
+}
+
+
+
+

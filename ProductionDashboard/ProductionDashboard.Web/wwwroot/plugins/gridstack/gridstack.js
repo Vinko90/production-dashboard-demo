@@ -911,6 +911,7 @@
       var draggingElement = null;
 
       var onDrag = function(event, ui) {
+        if (!draggingElement.is(self.opts.acceptWidgets)) return;
         var el = draggingElement;
         var node = el.data('_gridstack_node');
         var pos = self.getCellFromPixel({left: event.pageX, top: event.pageY}, true);
@@ -959,6 +960,7 @@
           }
         })
         .on(self.$el, 'dropover', function(event, ui) {
+          if (!$(ui.draggable).is(self.opts.acceptWidgets)) return;
           var el = $(ui.draggable);
           var width, height;
 
@@ -990,6 +992,7 @@
           return false; // prevent parent from receiving msg (which may be grid as well)
         })
         .on(self.$el, 'dropout', function(event, ui) {
+          if (!$(ui.draggable).is(self.opts.acceptWidgets)) return;
           // jquery-ui bug. Must verify widget is being dropped out
           // check node variable that gets set when widget is out of grid
           var el = $(ui.draggable);
@@ -1009,6 +1012,7 @@
           return false; // prevent parent from receiving msg (which may be grid as well)
         })
         .on(self.$el, 'drop', function(event, ui) {
+          if (!$(ui.draggable).is(self.opts.acceptWidgets)) return;
           self.placeholder.detach();
 
           var node = $(ui.draggable).data('_gridstack_node');

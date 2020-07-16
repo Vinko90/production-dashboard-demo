@@ -1,8 +1,6 @@
-﻿/*
-    Created by WarOfDevil - 21/06/2020
-*/
+﻿
 
-/*.btn-primary {
+.btn-primary {
     color: #fff;
     background-color: #007bff;
 }
@@ -22,15 +20,15 @@ h1 {
     font-size: 2.5rem;
     margin-bottom: .5rem;
 }
-*/
+
 .grid-stack {
     background: #f1f1f1;
 }
 
 .grid-stack-item-content {
-    color: #2c3e50;
+   
     text-align: center;
-    background-color: #18bc9c;
+  
 }
 
 .grid-stack-item-removing {
