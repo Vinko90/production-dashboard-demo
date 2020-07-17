@@ -16,7 +16,7 @@ function closeModList() {
 
 /* Set the width of the side navigation to 250px */
 function openDataMenu() {
-    document.getElementById("sideDataMenu").style.width = "350px";
+    document.getElementById("sideDataMenu").style.width = "250px";
 }
 
 /* Set the width of the side navigation to 0 */
@@ -70,11 +70,11 @@ $(document).ready(function() {
             }]
         },
         options: {
-            title: {
-                display: true,
-                text: 'Losses',
-                fontSize: 30
-            },
+            //title: {
+            //    display: true,
+            //    text: 'Losses',
+            //    fontSize: 30
+            //},
             legend: {
                 
                 display: true,
