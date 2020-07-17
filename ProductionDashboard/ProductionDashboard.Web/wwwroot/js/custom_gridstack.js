@@ -1,3 +1,7 @@
+/*
+    Created by WarOfDevil - 20/06/2020
+*/
+
 var grid = GridStack.init({
     alwaysShowResizeHandle: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
         navigator.userAgent

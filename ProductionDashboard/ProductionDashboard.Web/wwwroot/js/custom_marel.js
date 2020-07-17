@@ -1,4 +1,6 @@
-﻿
+﻿/*
+    Created by WarOfDevil - 20/06/2020
+*/
 
 /* Set the width of the side navigation to 250px */
 function openModList() {

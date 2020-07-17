@@ -7,15 +7,11 @@
     <title>@ViewData["Title"]</title>
 
     <link rel="stylesheet" href="~/plugins/bootstrap/css/bootstrap.css">
-
     <link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
-
     <link rel="stylesheet" href="~/plugins/gridstack/gridstack.css" />
-    <link rel="stylesheet" href="~/css/custom_gridstack.css" />
-
     <link rel="stylesheet" href="~/plugins/sswitch/css/style.css">
 
-    <link rel="stylesheet" href="~/css/custom.css">
+    <link rel="stylesheet" href="~/css/custom_marel.css">
 </head>
 <body class="view-mode">
 
@@ -24,6 +20,7 @@
 
     <div class="content-wrapper">
 
+        <!-- Toggle Switch -->
         <input type="checkbox" name="checkboxName" class="checkbox" />
 
         <div class="container-fluid p-0 m-0">
@@ -36,7 +33,6 @@
             <!-- Data Bar -->
             <partial name="_DataBar" />
         </div>
-
 
     </div>
 
@@ -61,27 +57,17 @@
         </div>
     </div>
 
-
     <script src="~/plugins/jquery/jquery.js"></script>
     <script src="~/plugins/jquery-ui/jquery-ui.js"></script>
-
     <script src="~/plugins/bootstrap/js/bootstrap.bundle.js"></script>
-
     <script src="~/plugins/gridstack/gridstack.js"></script>
     <script src="~/plugins/gridstack/gridstack.jQueryUI.js"></script>
-
-
     <script src="~/plugins/sswitch/js/Sswitch.js"></script>
-
     <script src="~/plugins/filesaver/dist/FileSaver.min.js"></script>
-
     <script src="~/plugins/chartjs/Chart.min.js"></script>
 
-    <script src="~/js/gridstack_core.js"></script>
-
-    <script src="~/js/custom.js"></script>
-
-
+    <script src="~/js/custom_gridstack.js"></script>
+    <script src="~/js/custom_marel.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

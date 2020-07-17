@@ -1,30 +1,29 @@
-/* ##################################*/
-/*          TYPOGRAPHY               */
-/* ##################################*/
+/*
+    Created by WarOfDevil - 20/06/2020
+*/
 
+/* ##################################*/
+/*          GENERAL                  */
+/* ##################################*/
 
 h1 {
-
     font-size: 18pt;
     font-weight: 700;
 }
 
 h2 {
-
     font-size: 14pt;
     font-weight: 700;
 }
 
 h3 {
-
     font-size: 12pt;
 }
 
-body {font-size: 10pt;
+body {
+    font-size: 10pt;
     font-family: 'Segoe UI', 'Open Sans', Tahoma, Geneva, Verdana, sans-serif;
 }
-
-
 
 /* ##################################*/
 /*          NAVIGATION BAR           */
@@ -206,7 +205,7 @@ body {font-size: 10pt;
 }
 
 /* ##################################*/
-/*              SWITCH MODE          */
+/*           TOGGLE SWITCH           */
 /* ##################################*/
 .s-switch {
     padding: 2px 3px;
@@ -217,7 +216,6 @@ body {font-size: 10pt;
 /*          MODULE LIST              */
 /* ##################################*/
 
-/* The side navigation menu */
 .module-list {
     height: 100%; /* 100% Full-height */
     height: 100vh;
@@ -235,9 +233,6 @@ body {font-size: 10pt;
     text-align: center;
 }
 
-
-
-/* The navigation menu links */
 .module-list a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
@@ -251,11 +246,11 @@ body {font-size: 10pt;
     border-top: 1px solid;
     padding: 10px 0;
 }
+
 .module-list .newWidget:last-child {
     border-bottom: 1px solid;
 }
 
-    /* When you mouse over the navigation links, change their color */
 .module-list a:hover {
     color: #f1f1f1;
 }
@@ -263,6 +258,10 @@ body {font-size: 10pt;
 .module-list #menuToggle{
     font-size: 18px;
 }
+
+/* ##################################*/
+/*          MODULES                  */
+/* ##################################*/
 
 .module {
     background-color: #ffffff;
@@ -318,7 +317,6 @@ body {font-size: 10pt;
     float: right;
 }
 
-
 .module-offline {
     background-color: #88ADCA;
     border-color: #88ADCA;
@@ -336,13 +334,12 @@ body {font-size: 10pt;
     border-color: #C41D2E;
 }
 
-
 /* ##################################*/
 /*          DATA MENU                */
 /* ##################################*/
 
 .data-menu {
-   border: 1px solid black;
+    border: 1px solid black;
     border-right: 0;
     height: 100%;
     width: 150px; /* 0 width - change this with JavaScript */
@@ -378,21 +375,17 @@ body {font-size: 10pt;
     padding-right: 0 !important;
 }
 
-
-.data-menu .row .col-8.text-left{
+.data-menu .row .col-8.text-left {
     font-weight: bold;
 }
 
-
-
-
-.table-notifications th{
+.table-notifications th {
     background-color: #3A4E71;
     color: #fff;
     text-align: center;
 }
 
-.table-notifications td{
+.table-notifications td {
     background-color: white;
     color: #88ADCA
 }
@@ -409,12 +402,10 @@ body {font-size: 10pt;
     border-right: 1px solid #88ADCA;
 }
 
+/* ##################################*/
+/*         ALERTS                    */
+/* ##################################*/
 
-
-
-
-
-/* ALERTS */ 
 .alert {
     display: inline-block;
     padding: 2px 5px;
@@ -424,9 +415,11 @@ body {font-size: 10pt;
     min-width: 70px;
     text-align: center;
 }
+
 .warning {
     background-color: #FEB012;
 }
+
 .fatal {
     background-color: #C41D2E;
 }
@@ -439,6 +432,19 @@ body {font-size: 10pt;
     cursor: move;
 }
 
+/* ##################################*/
+/*          GRIDSTACK                */
+/* ##################################*/
 
+.grid-stack {
+    background: #f1f1f1;
+}
 
+.grid-stack-item-content {
+    text-align: center;
+}
 
+.grid-stack-item-removing {
+    opacity: 0.8;
+    filter: blur(5px);
+}
