@@ -207,11 +207,44 @@ body {
 /* ##################################*/
 /*           TOGGLE SWITCH           */
 /* ##################################*/
+
 .s-switch {
     padding: 2px 3px;
     margin: 5px; 
  }
- 
+
+/* ##################################*/
+/*           DATA BAR TOGGLE         */
+/* ##################################*/
+
+.dbToggle {
+    display: inline-block;
+    cursor: pointer;
+    padding-right: 10px;
+}
+
+.bar1, .bar2, .bar3 {
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+.dbToggleClose .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-7px, 6px);
+    transform: rotate(-45deg) translate(-7px, 6px);
+}
+
+.dbToggleClose .bar2 {
+    opacity: 0;
+}
+
+.dbToggleClose .bar3 {
+    -webkit-transform: rotate(45deg) translate(-6px, -6px);
+    transform: rotate(45deg) translate(-6px, -6px);
+}
+
 /* ##################################*/
 /*          MODULE LIST              */
 /* ##################################*/
@@ -260,10 +293,6 @@ body {
 .module-list a:hover {
     color: #f1f1f1;
 }
-
-/*.module-list #menuToggle{
-    font-size: 14px;
-}*/
 
 /* ##################################*/
 /*          MODULES                  */

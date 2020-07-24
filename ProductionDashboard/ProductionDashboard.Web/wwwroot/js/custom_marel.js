@@ -17,12 +17,25 @@ function closeModList() {
 /* Set the width of the side navigation to 250px */
 function openDataMenu() {
     document.getElementById("sideDataMenu").style.width = "250px";
+    document.getElementById("dbToggle").classList.add("dbToggleClose");
 }
 
 /* Set the width of the side navigation to 0 */
 function closeDataMenu() {
     document.getElementById("sideDataMenu").style.width = "0";
+    document.getElementById("dbToggle").classList.remove("dbToggleClose");
 }
+
+/* Toggle the Data Bar icon */
+function toggleDataBarIcon(bar) {
+    var statusClose = bar.classList.contains("dbToggleClose");
+
+    if (statusClose) {
+        closeDataMenu();
+    } else {
+        openDataMenu();
+    }  
+} 
 
 var editMode = false;
 $(".checkbox").Sswitch({
@@ -44,16 +57,6 @@ $(".checkbox").Sswitch({
         }    
     }
   });
-
-  function toggleNav() {
-      if ($("#menuToggle").hasClass("open")) {
-        
-        closeModList();
-      } else {
-       
-        openModList();  
-      }
-  } 
 
 $(document).ready(function() {
     var ctx = $("#chart-line");
