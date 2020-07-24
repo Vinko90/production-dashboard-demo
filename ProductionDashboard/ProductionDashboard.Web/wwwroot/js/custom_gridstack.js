@@ -3,13 +3,10 @@
 */
 
 var grid = GridStack.init({
-    alwaysShowResizeHandle: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
-    ),
     resizable: {
         handles: 'e, se, s, sw, w'
     },
-    removable: '#trash',
+    animate: true,
     removeTimeout: 100,
     acceptWidgets: '.newWidget',
     minRow: 3,
@@ -70,9 +67,6 @@ function updateWidgetLayout(moduleNo)  {
         moduleExtras = ' onclick="showModal('+moduleNo+');" data-target="#mModal" ';
     }
 
-        
-
-    //$(".grid-stack .module-list-"+moduleNo).
     var html = `  <div class="grid-stack-item-content"> 
                         <div class="module module-${mData.State.toLowerCase()}">
                             <div class="module-title"  ${moduleExtras}>
@@ -146,7 +140,7 @@ loadGrid = function(fileModules) {
      console.log(items);
      items.forEach(function (node) {
          console.log(node);
-       grid.addWidget(`<div class="newWidget grid-stack-item-content module-list-${node.ModuleID}" data-module="${node.ModuleID}" data-gs-width="2" data-gs-height="3""></div>`, node);
+         grid.addWidget(`<div class="newWidget grid-stack-item-content module-list-${node.ModuleID}" data-module="${node.ModuleID}" data-gs-width="2" data-gs-height="3""></div>`, node);
      });
      grid.commit();
     
@@ -259,8 +253,6 @@ function getModules() {
     // $.getJSON("modules.json", function (data) {
     //     console.log(data);
     // });
-
-   
 
      var data =  { 
          "modules": [

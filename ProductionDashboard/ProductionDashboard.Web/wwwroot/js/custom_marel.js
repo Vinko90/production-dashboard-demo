@@ -70,11 +70,6 @@ $(document).ready(function() {
             }]
         },
         options: {
-            //title: {
-            //    display: true,
-            //    text: 'Losses',
-            //    fontSize: 30
-            //},
             legend: {
                 
                 display: true,
