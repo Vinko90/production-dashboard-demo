@@ -41,10 +41,7 @@ $(".checkbox").Sswitch({
             grid.enable();
             $("body").removeClass("view-mode").addClass("edit-mode");
             editMode = true;
-        }
-
-        
-    
+        }    
     }
   });
 

@@ -354,7 +354,7 @@ function buildMenu() {
         $("#sideModuleList").append(
          `<div class="newWidget grid-stack-item module-list-${item.ModuleID}" data-module="${item.ModuleID}" data-gs-width="2" data-gs-height="3">
             <div class=" grid-stack-item-content">
-                     ${item.ModuleName}
+                     <i class="fas fa-truck-loading"></i> ${item.ModuleName}
                 </div>
             </div>`);
     });

@@ -1,8 +1,8 @@
 .s-switch input[type='checkbox']{display:none}
 
 .s-switch {
-	width: 62px;
-	height: 32px;
+	width: 52px;
+	height: 22px;
 	background: #E5E5E5;
 	z-index: 0;
 	margin: 0;
@@ -22,8 +22,8 @@
 	position: absolute;
 	left: 1px;
 	top: 1px;
-	width: 60px;
-	height: 30px;
+	width: 50px;
+	height: 20px;
 	background: #FFFFFF;
 	z-index: 1;
 	border-radius:16px; 
@@ -33,9 +33,9 @@
 
 .s-switch:after {
 	content: ' ';
-	height: 29px;
-	width: 29px;
-	border-radius: 28px;
+	height: 19px;
+	width: 19px;
+	border-radius: 18px;
 	z-index: 2;
 	background: #FFFFFF;
 	position: absolute;

@@ -217,20 +217,26 @@ body {
 /* ##################################*/
 
 .module-list {
-    height: 100%; /* 100% Full-height */
-    height: 100vh;
+    height: 70%;
+    height: 70vh;
     width: 0; /* 0 width - change this with JavaScript */
-     /* Stay in place */
     z-index: 1; /* Stay on top */
     top: 0%; /* Stay at the top */
     left: 0;
-    background-color: #f2f2f2; 
+    background-color: #ffffff; 
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 0px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
-    border: 1px solid black;
+    border: 1px solid #4c4c4c;
     float: left;
     text-align: center;
+}
+
+.module-list h2 {
+    font-size: 15px;
+    margin-top: 5px;
+    text-align: center;
+    color: #384d70;
 }
 
 .module-list a {
@@ -255,9 +261,9 @@ body {
     color: #f1f1f1;
 }
 
-.module-list #menuToggle{
-    font-size: 18px;
-}
+/*.module-list #menuToggle{
+    font-size: 14px;
+}*/
 
 /* ##################################*/
 /*          MODULES                  */
@@ -439,7 +445,7 @@ body {
 /* ##################################*/
 
 .grid-stack {
-    background: #f1f1f1;
+    background: #ffffff;
 }
 
 .grid-stack-item-content {
