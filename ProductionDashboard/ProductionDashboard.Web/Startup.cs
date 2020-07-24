@@ -8,19 +8,26 @@ namespace ProductionDashboard.Web
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Environment { get; set; }
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            Environment = env;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages()
-                .AddRazorRuntimeCompilation();
-            
+            IMvcBuilder builder = services.AddRazorPages();
+
+#if DEBUG
+            if (Environment.IsDevelopment())
+            {
+                    builder.AddRazorRuntimeCompilation();
+            }
+#endif
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,7 +43,7 @@ namespace ProductionDashboard.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 //app.UseHsts();
             }
-
+            
             app.UseStaticFiles();
 
             app.UseRouting();
