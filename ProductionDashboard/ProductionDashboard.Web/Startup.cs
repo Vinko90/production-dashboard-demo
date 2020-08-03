@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ProductionDashboard.Web.Hubs;
 
 namespace ProductionDashboard.Web
 {
@@ -28,6 +29,7 @@ namespace ProductionDashboard.Web
                     builder.AddRazorRuntimeCompilation();
             }
 #endif
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +53,7 @@ namespace ProductionDashboard.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapHub<SimHub>("/simHub");
             });
         }
     }

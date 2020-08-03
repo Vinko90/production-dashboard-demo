@@ -8,5 +8,28 @@
 </div>
 
 @section Scripts{
+    <script type="text/javascript">
 
+        "use strict";
+
+        var connection = new signalR.HubConnectionBuilder().withUrl("/simHub").build();
+        connection.logging = true;
+
+        connection.start().then(function () {
+            //var result = connection.invoke("RequestModuleList").result;
+            //console.log(result.toString());
+            connection.invoke('RequestModuleList').done(function (result) {
+                if (result) {
+                    console.log("Server return true");
+                } else {
+                    console.log("Server return false");
+                }
+            }).fail(function (error) {
+                console.log('Invocation of RequestModuleList. Error: ' + error);
+            });
+        }).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+    </script>
 }
