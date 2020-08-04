@@ -49,6 +49,8 @@ $(".checkbox").Sswitch({
             $("body").removeClass("edit-mode").addClass("view-mode");
             editMode = false;
         } else {
+            //buildMenu();
+            requestModuleList();
             openModList();
             closeDataMenu();
             grid.enable();
