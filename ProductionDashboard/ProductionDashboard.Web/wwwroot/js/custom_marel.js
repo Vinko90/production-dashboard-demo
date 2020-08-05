@@ -50,7 +50,7 @@ $(".checkbox").Sswitch({
             editMode = false;
         } else {
             //buildMenu();
-            requestModuleList();
+            //requestModuleList();
             openModList();
             closeDataMenu();
             grid.enable();
