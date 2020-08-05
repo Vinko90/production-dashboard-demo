@@ -2,6 +2,88 @@
     Created by WarOfDevil - 20/06/2020
 */
 
+
+/*
+    SignalR connection and events
+*/
+//"use strict";
+
+var moduleDefaults;
+
+var connection = new signalR.HubConnectionBuilder().withUrl("/simHub").build();
+connection.logging = true;
+
+
+connection.on("ReceiveModuleList", function (moduleList) {
+
+    console.log("Received Module List from Server - Count: " + moduleList.length);
+
+    for (var i = 0; i < moduleList.length; i++) {
+        console.log("Name: " + moduleList[i].moduleName + " ID: " + moduleList[i].moduleID);
+        
+        $("#sideModuleList").append(
+            `<div class="newWidget grid-stack-item module-list-${moduleList[i].moduleID}" data-module="${moduleList[i].moduleID}" data-gs-width="2" data-gs-height="3">
+                <div class=" grid-stack-item-content">
+                     <i class="fas fa-truck-loading"></i> ${moduleList[i].moduleName}
+                </div>
+            </div>`);
+    }
+
+    $('.newWidget').draggable({
+        revert: 'invalid',
+        scroll: false,
+        appendTo: 'body',
+        helper: 'clone',
+        drag: function() {
+            //console.log($(this));
+        }
+    });
+
+    moduleDefaults = moduleList;
+});
+
+connection.on("ReceivedModuleDataUpdate", function (module) {
+    console.log("Received data update from module: " + module.moduleName);
+
+    notification = '';
+    var moduleExtras = '';
+
+    if (module.alarm) {
+        notification = '<i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i>';
+
+        moduleExtras = ' onclick="showModal(' + module.moduleID + ');" data-target="#mModal" ';
+    }
+
+    var html = `  <div class="grid-stack-item-content"> 
+                        <div class="module module-${module.state.toLowerCase()}">
+                            <div class="module-title"  ${moduleExtras}>
+                                <div class="notification">${notification}</div>
+                                <h3>${module.moduleName}</h3> 
+                            </div>
+
+                            <div class="module-content"> 
+                                    <h3>Tray information</h3>
+                                    <label>Current tray: <span>${module.currentTray}</span></label> <br/>
+                                    <label>Upcoming tray: <span>${module.upcomingTray}</span></label><br/>
+
+                                    <h3>Supply lot information</h3>
+                                    
+                                    <label>Supply lot: <span>${module.supplyLot}</span></label><br/>
+                                    <label>Farmer: <span>${module.farmer}</span></label><br/>
+                                    <label>Licence plate: <span>${module.licensePlate}</span></label><br/>
+                                    <h3><label style="margin:0">State <span>${module.state}</span></label></h3> 
+
+                            </div>
+                        </div>
+                        </div> 
+                    </div>`;
+    $(".grid-stack .module-list-" + module.moduleID).html(html);
+});
+
+$(document).ready(function () {   
+    connection.start().then(() => connection.invoke("RequestModuleList"));
+});
+
 var grid = GridStack.init({
     resizable: {
         handles: 'e, se, s, sw, w'
@@ -61,30 +143,30 @@ function updateWidgetLayout(moduleNo)  {
   notification = '';
   var moduleExtras = '';
     
-    if (mData.Alarm) {
+    if (mData.alarm) {
         notification = '<i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i>';
         
         moduleExtras = ' onclick="showModal('+moduleNo+');" data-target="#mModal" ';
     }
 
     var html = `  <div class="grid-stack-item-content"> 
-                        <div class="module module-${mData.State.toLowerCase()}">
+                        <div class="module module-${mData.state.toLowerCase()}">
                             <div class="module-title"  ${moduleExtras}>
                                 <div class="notification">${notification}</div>
-                                <h3>${mData.ModuleName}</h3> 
+                                <h3>${mData.moduleName}</h3> 
                             </div>
 
                             <div class="module-content"> 
                                     <h3>Tray information</h3>
-                                    <label>Current tray: <span>${mData.CurrentTray}</span></label> <br/>
-                                    <label>Upcoming tray: <span>${mData.UpcomingTray}</span></label><br/>
+                                    <label>Current tray: <span>${mData.currentTray}</span></label> <br/>
+                                    <label>Upcoming tray: <span>${mData.upcomingTray}</span></label><br/>
 
                                     <h3>Supply lot information</h3>
                                     
-                                    <label>Supply lot: <span>${mData.SupplyLot}</span></label><br/>
-                                    <label>Farmer: <span>${mData.Farmer}</span></label><br/>
-                                    <label>Licence plate: <span>${mData.LicensePlate}</span></label><br/>
-                                    <h3><label style="margin:0">State <span>${mData.State}</span></label></h3> 
+                                    <label>Supply lot: <span>${mData.supplyLot}</span></label><br/>
+                                    <label>Farmer: <span>${mData.farmer}</span></label><br/>
+                                    <label>Licence plate: <span>${mData.licensePlate}</span></label><br/>
+                                    <h3><label style="margin:0">State <span>${mData.state}</span></label></h3> 
 
                             </div>
                         </div>
@@ -96,7 +178,12 @@ $(".grid-stack .module-list-"+moduleNo).html(html);
 }
 
 function getModuleData(moduleNo) {
-     return moduleDefaults.modules.filter( function( el) { return el.ModuleID === ""+moduleNo} ) ;
+   
+    var result = moduleDefaults.filter(obj => {
+        return obj.moduleID === moduleNo
+    })
+
+    return result;
 }
 
 function showModal( moduleNo ){
@@ -143,8 +230,7 @@ loadGrid = function(fileModules) {
          grid.addWidget(`<div class="newWidget grid-stack-item-content module-list-${node.ModuleID}" data-module="${node.ModuleID}" data-gs-width="2" data-gs-height="3""></div>`, node);
      });
      grid.commit();
-    
-  
+     
   };
 
 
@@ -153,8 +239,6 @@ function saveStaticDataToFile(data,filename) {
         { type: "text/plain;charset=utf-8" });
     saveAs(blob, filename);
 }
-
-
 
 
 var fileModules = {};
@@ -197,176 +281,59 @@ function startRead() {
     }
   }
   
-  function getAsText(readFile) {
+function getAsText(readFile) {
   
-    var reader = new FileReader();
+var reader = new FileReader();
   
-    // Read file into memory as UTF-16
-    reader.readAsText(readFile, "UTF-8");
+// Read file into memory as UTF-16
+reader.readAsText(readFile, "UTF-8");
   
-    // Handle progress, success, and errors
-    reader.onprogress = updateProgress;
-    reader.onload = loaded;
-    reader.onerror = errorHandler;
-  }
+// Handle progress, success, and errors
+reader.onprogress = updateProgress;
+reader.onload = loaded;
+reader.onerror = errorHandler;
+}
   
-  function updateProgress(evt) {
-    if (evt.lengthComputable) {
-      // evt.loaded and evt.total are ProgressEvent properties
-      var loaded = (evt.loaded / evt.total);
-      if (loaded < 1) {
-        // Increase the prog bar length
-        // style.width = (loaded * 200) + "px";
-      }
+function updateProgress(evt) {
+if (evt.lengthComputable) {
+    // evt.loaded and evt.total are ProgressEvent properties
+    var loaded = (evt.loaded / evt.total);
+    if (loaded < 1) {
+    // Increase the prog bar length
+    // style.width = (loaded * 200) + "px";
     }
-  }
+}
+}
   
-  function loaded(evt) {
-    // Obtain the read file data
-    var fileString = evt.target.result;
-    // Handle UTF-16 file dump
+function loaded(evt) {
+// Obtain the read file data
+var fileString = evt.target.result;
+// Handle UTF-16 file dump
     
-    fileModules = JSON.parse(fileString);
+fileModules = JSON.parse(fileString);
 
-    loadGrid(fileModules);
+loadGrid(fileModules);
    
-    console.log( fileString, fileModules);
-    // xhr.send(fileString)
-  }
+console.log( fileString, fileModules);
+// xhr.send(fileString)
+}
   
-  function errorHandler(evt) {
+function errorHandler(evt) {
     if(evt.target.error.name == "NotReadableError") {
-      // The file could not be read
+        // The file could not be read
     }
-  }
+}
 
-  function clearDashboard() {
+function clearDashboard() {
     grid.removeAll();
-    $("#sideModuleList div").remove();
-    buildMenu();
-  }
-
-
-// Load modules from JSON
-// TODO: Load from URL
-function getModules() {
-    // $.getJSON("modules.json", function (data) {
-    //     console.log(data);
-    // });
-
-     var data =  { 
-         "modules": [
-            { "ModuleID": "1",
-              "ModuleName": "Module Name 1",
-              "ModuleType": "1",
-              "CurrentTray" : "38000",
-              "UpcomingTray" : "38466",
-              "SupplyLot" : 2,
-              "Farmer" : "Smith Paultry",
-              "LicensePlate" : "59-750A",
-              "State" : "Connected",
-              "Alarm" : false
-            },
-             { "ModuleID": "2",
-              "ModuleName": "Module Name 2",
-              "ModuleType": "1",
-              "CurrentTray" : "38000",
-              "UpcomingTray" : "38466",
-              "SupplyLot" : "2",
-              "Farmer" : "Smith Paultry",
-              "LicensePlate" : "59-750A",
-              "State" : "Offline",
-              "Alarm" : true
-            },
-             { "ModuleID": "3",
-              "ModuleName": "Module Name 3",
-              "ModuleType": "1",
-              "CurrentTray" : "38000",
-              "UpcomingTray" : "38466",
-              "SupplyLot" : "2",
-              "Farmer" : "Smith Paultry",
-              "LicensePlate" : "59-750A",
-              "State" : "Offline",
-              "Alarm" : false
-            },
-             { "ModuleID": "4",
-              "ModuleName": "Module Name 4",
-              "ModuleType": "3",
-              "CurrentTray" : "38000",
-              "UpcomingTray" : "38466",
-              "SupplyLot" : "2",
-              "Farmer" : "Smith Paultry",
-              "LicensePlate" : "59-750A",
-              "State" : "Warning",
-              "Alarm" : true
-            },
-             { "ModuleID": "5",
-              "ModuleName": "Module Name 5",
-              "ModuleType": "4",
-              "CurrentTray" : "38000",
-              "UpcomingTray" : "38466",
-              "SupplyLot" : "2",
-              "Farmer" : "Smith Paultry",
-              "LicensePlate" : "59-750A",
-              "State" : "Connected",
-              "Alarm" : false
-            },
-             { "ModuleID": "6",
-              "ModuleName": "Module Name 6",
-              "ModuleType": "3",
-              "CurrentTray" : "38000",
-              "UpcomingTray" : "38466",
-              "SupplyLot" : "2",
-              "Farmer" : "Williams Agry",
-              "LicensePlate" : "11-921A",
-              "State" : "Warning",
-              "Alarm" : true
-            }
-            ,
-             { "ModuleID": "7",
-              "ModuleName": "Module Name 7",
-              "ModuleType": "3",
-              "CurrentTray" : "38000",
-              "UpcomingTray" : "38466",
-              "SupplyLot" : "1",
-              "Farmer" : "Robert Agry",
-              "LicensePlate" : "77-921A",
-              "State" : "Fatal",
-              "Alarm" : true
-            }
-          ]  
-      };
-
-       return data;
+    //$("#sideModuleList div").remove();
+    //buildMenu();
 }
 
-function buildMenu() {
-   
-    moduleDefaults.modules.forEach(function (item) {
-        $("#sideModuleList").append(
-         `<div class="newWidget grid-stack-item module-list-${item.ModuleID}" data-module="${item.ModuleID}" data-gs-width="2" data-gs-height="3">
-            <div class=" grid-stack-item-content">
-                     <i class="fas fa-truck-loading"></i> ${item.ModuleName}
-                </div>
-            </div>`);
-    });
-      // TODO: switch jquery-ui out
-      $('.newWidget').draggable({
-        revert: 'invalid',
-        scroll: false,
-        appendTo: 'body',
-        helper: 'clone',
-        drag: function() {
-            //console.log($(this));
-        }
-    });
-}
-//This is data root
-var  moduleDefaults;
-$(document).ready(function () {
-    moduleDefaults = getModules();
-   // moduleDefaults = JSON.parse(moduleDefaults);
-    console.log(moduleDefaults);
 
-    buildMenu();
-});
+
+
+
+
+
+
