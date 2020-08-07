@@ -2,17 +2,15 @@
     Created by WarOfDevil - 20/06/2020
 */
 
+/************************************** 
+*   SignalR connection and events    * 
+**************************************/
 
-/*
-    SignalR connection and events
-*/
-//"use strict";
-
-var moduleDefaults;
+//Array holding modules on load
+var moduleDefaults; 
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/simHub").build();
 connection.logging = true;
-
 
 connection.on("ReceiveModuleList", function (moduleList) {
 
@@ -84,6 +82,10 @@ $(document).ready(function () {
     connection.start().then(() => connection.invoke("RequestModuleList"));
 });
 
+/**************************************
+*   Gridstack events                  *
+**************************************/
+
 var grid = GridStack.init({
     resizable: {
         handles: 'e, se, s, sw, w'
@@ -101,51 +103,51 @@ grid.on('added removed change', function (e, items) {
     var moduleNo = '';
    
     items.forEach(function (item) {
+
         moduleNo = $(item.el).data('module');
        
-    if (moduleNo && e.type == 'added') {
+        if (moduleNo && e.type == 'added') {
         
-        //Update widget layout        
-        updateWidgetLayout(moduleNo);
+            //Update widget layout        
+            updateWidgetLayout(moduleNo);
         
-        //Hide module from menu
-        $("#sideModuleList .module-list-"+moduleNo).hide();
+            //Hide module from menu
+            $("#sideModuleList .module-list-"+moduleNo).hide();
 
-        //Add widget remove handler 
-        $( ".grid-stack .module-list-"+moduleNo ).contextmenu(function(ev) {
-            console.log(editMode,moduleNo);
-            if ($(document.body).hasClass("edit-mode")) {
-                ev.preventDefault();    
-                grid.removeWidget(item.el);
-                return false;
-            }
-        });
-    }
-    if (moduleNo && e.type == 'removed') {
-        if (item.el) {
-            $("#sideModuleList .module-list-"+moduleNo).show();
+            //Add widget remove handler 
+            $( ".grid-stack .module-list-"+moduleNo ).contextmenu(function(ev) {
+                console.log(editMode,moduleNo);
+                if ($(document.body).hasClass("edit-mode")) {
+                    ev.preventDefault();    
+                    grid.removeWidget(item.el);
+                    return false;
+                }
+            });
         }
-    }
-    str += ' (x,y)=' + item.x + ',' + item.y; 
-});
 
-console.log(e.type + ' ' + items.length + ' items:' + str);
+        if (moduleNo && e.type == 'removed') {
+            if (item.el) {
+                $("#sideModuleList .module-list-"+moduleNo).show();
+            }
+        }
 
+        str += ' (x,y)=' + item.x + ',' + item.y; 
+    });
+
+    console.log(e.type + ' ' + items.length + ' items:' + str);
 });
 
 function updateWidgetLayout(moduleNo)  {
     var mData  = getModuleData(moduleNo);
-
     console.log("mdata", mData);
     if (!mData) return false;
 
-  mData = mData[0];
-  notification = '';
-  var moduleExtras = '';
+    mData = mData[0];
+    notification = '';
+    var moduleExtras = '';
     
     if (mData.alarm) {
-        notification = '<i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i>';
-        
+        notification = '<i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i>';      
         moduleExtras = ' onclick="showModal('+moduleNo+');" data-target="#mModal" ';
     }
 
@@ -172,9 +174,8 @@ function updateWidgetLayout(moduleNo)  {
                         </div>
                         </div> 
                     </div>`;
-$(".grid-stack .module-list-"+moduleNo).html(html);
-   
 
+    $(".grid-stack .module-list-" + moduleNo).html(html);
 }
 
 function getModuleData(moduleNo) {
@@ -199,130 +200,7 @@ function showModal( moduleNo ){
         $("#mModal .modal-body").html("Notification alert message here");
 }
 
-saveGrid = function() {
-    serializedData = [];
-    grid.engine.nodes.forEach(function(node) {
-        var moduleID = $(node.el).data("module");
-      serializedData.push({
-        x: node.x,
-        y: node.y,
-        width: node.width,
-        height: node.height,
-        ModuleID: moduleID,
-        moduleObject: getModuleData(moduleID)
-      });
-    });
-    var data = JSON.stringify(serializedData, null, '  ');
 
-    if (data) 
-    saveStaticDataToFile (data, "dashboard.json.txt");
-};
-
-loadGrid = function(fileModules) {
-    editMode = true;
-    grid.removeAll();
-    var items = fileModules;
-     grid.batchUpdate();
-
-     console.log(items);
-     items.forEach(function (node) {
-         console.log(node);
-         grid.addWidget(`<div class="newWidget grid-stack-item-content module-list-${node.ModuleID}" data-module="${node.ModuleID}" data-gs-width="2" data-gs-height="3""></div>`, node);
-     });
-     grid.commit();
-     
-  };
-
-
-function saveStaticDataToFile(data,filename) {
-    var blob = new Blob([data],
-        { type: "text/plain;charset=utf-8" });
-    saveAs(blob, filename);
-}
-
-
-var fileModules = {};
-function loadModal() {
-    $("#mModal").modal("show");
-    $("#mModal .modal-title").html("Load dashboard");
-    $("#mModal .modal-body").html(`<form>
-    <div class="custom-file">
-      <input type="file" class="custom-file-input" id="file">
-      <label class="custom-file-label" for="customFile">Choose file</label>
-    </div>
-  </form>`);
-
-  $(".custom-file-input").on("change", function(e) {
-    var fileName = $(this).val().split("\\").pop();
-    console.log($(this).val());
-    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-    $("#mModal .btn.btn-primary").html("Load").on('click',function () {
-        if ($(document.body).hasClass("view-mode")) {
-            $(".s-switch").click();
-        }
-
-        startRead();
-        $("#mModal").modal("hide");
-        
-    });
-
-  });
-
-}
-
-
-
-function startRead() {
-    // obtain input element through DOM
-  
-    var file = document.getElementById('file').files[0];
-    if(file){
-      getAsText(file);
-    }
-  }
-  
-function getAsText(readFile) {
-  
-var reader = new FileReader();
-  
-// Read file into memory as UTF-16
-reader.readAsText(readFile, "UTF-8");
-  
-// Handle progress, success, and errors
-reader.onprogress = updateProgress;
-reader.onload = loaded;
-reader.onerror = errorHandler;
-}
-  
-function updateProgress(evt) {
-if (evt.lengthComputable) {
-    // evt.loaded and evt.total are ProgressEvent properties
-    var loaded = (evt.loaded / evt.total);
-    if (loaded < 1) {
-    // Increase the prog bar length
-    // style.width = (loaded * 200) + "px";
-    }
-}
-}
-  
-function loaded(evt) {
-// Obtain the read file data
-var fileString = evt.target.result;
-// Handle UTF-16 file dump
-    
-fileModules = JSON.parse(fileString);
-
-loadGrid(fileModules);
-   
-console.log( fileString, fileModules);
-// xhr.send(fileString)
-}
-  
-function errorHandler(evt) {
-    if(evt.target.error.name == "NotReadableError") {
-        // The file could not be read
-    }
-}
 
 function clearDashboard() {
     grid.removeAll();
@@ -330,10 +208,89 @@ function clearDashboard() {
     //buildMenu();
 }
 
+/* Save and Load functionalities */
 
+function saveGrid() {
 
+    serializedData = [];
+    grid.engine.nodes.forEach(function (node) {
+        var moduleID = $(node.el).data("module");
+        serializedData.push({
+            x: node.x,
+            y: node.y,
+            width: node.width,
+            height: node.height,
+            ModuleID: moduleID,
+            moduleObject: getModuleData(moduleID)
+        });
+    });
+    var data = JSON.stringify(serializedData, null, '  ');
 
+    if (data) {
+        var blob = new Blob([data], { type: "text/plain;charset=utf-8" });
+        saveAs(blob, "dashboard.json.txt");
+        toastr.success('Dashboard layout succesfully saved!', 'Save Dashboard');
+    }
+}
 
+function loadModal() {
 
+    window.$("#mModal").modal("show");
+    window.$("#mModal .modal-title").html("Load dashboard");
+    window.$("#mModal .modal-body").html(`<form>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="file">
+                                            <label class="custom-file-label" for="customFile">Choose file</label>
+                                        </div>
+                                   </form>`);
 
+    $(".custom-file-input").on("change", function (e) {
+        var fileName = $(this).val().split("\\").pop();
+        console.log($(this).val());
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        $("#mModal .btn.btn-primary").html("Load").on('click', function () {
+            if ($(document.body).hasClass("view-mode")) {
+                $(".s-switch").click();
+            }
 
+            // obtain input element through DOM
+            var file = document.getElementById('file').files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.readAsText(file, "UTF-8");
+
+                // Handle progress, success, and errors
+                //reader.onprogress = updateProgress;
+                reader.onerror = errorHandler;
+                reader.onload = loaded;                
+            }
+
+            $("#mModal").modal("hide");
+        });
+    });
+}
+
+function errorHandler(evt) {
+    if (evt.target.error.name == "NotReadableError") {
+        toastr.error('Error, unreadable dashboard layout file', 'Load Dashboard');
+    }
+}
+
+function loaded(evt) {
+    
+    var fileString = evt.target.result;
+    
+    var fileModules = JSON.parse(fileString);
+
+    editMode = true;
+    grid.removeAll();
+    grid.batchUpdate();
+
+    fileModules.forEach(function (node) {
+        console.log(node);
+        grid.addWidget(`<div class="newWidget grid-stack-item-content module-list-${node.ModuleID}" data-module="${node.ModuleID}" data-gs-width="2" data-gs-height="3""></div>`, node);
+    });
+
+    grid.commit();
+    toastr.success('Dashboard layout succesfully loaded!', 'Load Dashboard');
+}
