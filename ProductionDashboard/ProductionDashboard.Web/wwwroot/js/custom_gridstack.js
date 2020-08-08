@@ -6,12 +6,14 @@
 *   SignalR connection and events    * 
 **************************************/
 
-//Array holding modules on load
+/* Array holding modules on load */
 var moduleDefaults; 
 
+/* Connect to simulation Hub */
 var connection = new signalR.HubConnectionBuilder().withUrl("/simHub").build();
 connection.logging = true;
 
+/* SignalR event triggered when module list is received from the server */
 connection.on("ReceiveModuleList", function (moduleList) {
 
     console.log("Received Module List from Server - Count: " + moduleList.length);
@@ -40,6 +42,7 @@ connection.on("ReceiveModuleList", function (moduleList) {
     moduleDefaults = moduleList;
 });
 
+/* SignalR event triggered when module push data so client */
 connection.on("ReceivedModuleDataUpdate", function (module) {
     console.log("Received data update from module: " + module.moduleName);
 
@@ -78,6 +81,7 @@ connection.on("ReceivedModuleDataUpdate", function (module) {
     $(".grid-stack .module-list-" + module.moduleID).html(html);
 });
 
+/* SignalR event triggered on page ready to request module list from server */
 $(document).ready(function () {   
     connection.start().then(() => connection.invoke("RequestModuleList"));
 });
@@ -86,6 +90,7 @@ $(document).ready(function () {
 *   Gridstack events                  *
 **************************************/
 
+/* Initialize Gridstack */
 var grid = GridStack.init({
     resizable: {
         handles: 'e, se, s, sw, w'
@@ -98,6 +103,7 @@ var grid = GridStack.init({
     float: true
 });
 
+/* Gridstack widget events */
 grid.on('added removed change', function (e, items) {
     var str = '';
     var moduleNo = '';
@@ -137,6 +143,7 @@ grid.on('added removed change', function (e, items) {
     console.log(e.type + ' ' + items.length + ' items:' + str);
 });
 
+/* Update the widget layout when it is dragged from the menu to the dashboard */
 function updateWidgetLayout(moduleNo)  {
     var mData  = getModuleData(moduleNo);
     console.log("mdata", mData);
@@ -178,6 +185,7 @@ function updateWidgetLayout(moduleNo)  {
     $(".grid-stack .module-list-" + moduleNo).html(html);
 }
 
+/* Get data for a module Id */
 function getModuleData(moduleNo) {
    
     var result = moduleDefaults.filter(obj => {
@@ -187,30 +195,24 @@ function getModuleData(moduleNo) {
     return result;
 }
 
-function showModal( moduleNo ){
+/* Modal show when user click on module with active notification */
+function showModal(moduleNo){
      if (editMode) return false;
-     $("#mModal .modal-title").html("Module  "+moduleNo + " info");
 
-        $("#mModal").modal("show");
-          $(".grid-stack .module-list-"+moduleNo + " .module" )
-        .removeClass("module-fatal")
-        .removeClass("module-warning")
-        .addClass('module-connected');
+    $("#mModal .modal-title").html("Module  " + moduleNo + " Info");
+    $("#mModal .modal-body").html("Notification alert message here");
 
-        $("#mModal .modal-body").html("Notification alert message here");
+    $("#mModal").modal("show");
+   
+    //Feature to acknowledge an alarm and change header color
+    //$(".grid-stack .module-list-"+moduleNo + " .module" )
+    //.removeClass("module-fatal")
+    //.removeClass("module-warning")
+    //.addClass('module-connected');
 }
 
-
-
-function clearDashboard() {
-    grid.removeAll();
-    //$("#sideModuleList div").remove();
-    //buildMenu();
-}
-
-/* Save and Load functionalities */
-
-function saveGrid() {
+/* Save the content of the dashboard in a file */
+function saveDashboard() {
 
     serializedData = [];
     grid.engine.nodes.forEach(function (node) {
@@ -233,7 +235,8 @@ function saveGrid() {
     }
 }
 
-function loadModal() {
+/* Load the dashboard from a json text file */
+function loadDashboard() {
 
     window.$("#mModal").modal("show");
     window.$("#mModal .modal-title").html("Load dashboard");
@@ -270,12 +273,14 @@ function loadModal() {
     });
 }
 
+/* Load => Error handler */
 function errorHandler(evt) {
     if (evt.target.error.name == "NotReadableError") {
         toastr.error('Error, unreadable dashboard layout file', 'Load Dashboard');
     }
 }
 
+/* Load => File loaded handler */
 function loaded(evt) {
     
     var fileString = evt.target.result;
@@ -293,4 +298,9 @@ function loaded(evt) {
 
     grid.commit();
     toastr.success('Dashboard layout succesfully loaded!', 'Load Dashboard');
+}
+
+/* Clear dashboard */
+function clearDashboard() {
+    grid.removeAll();
 }

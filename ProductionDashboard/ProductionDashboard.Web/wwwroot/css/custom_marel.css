@@ -485,3 +485,22 @@ body {
     opacity: 0.8;
     filter: blur(5px);
 }
+
+/* ##################################*/
+/*          MODAL VIEW               */
+/* ##################################*/
+
+.modal-header {
+    background-color: #3A4E71;
+    color: white;
+    height: 50px;
+    align-items: center;
+}
+
+.modal-header .close {
+    display: none;
+}
+
+.modal-footer {
+    padding: 0rem;
+}
