@@ -47,17 +47,20 @@ connection.on("ReceivedModuleDataUpdate", function (module) {
     console.log("Received data update from module: " + module.moduleName);
 
     notification = '';
-    var moduleExtras = '';
+    var moduleClickEvent = '';
 
     if (module.alarm) {
         notification = '<i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i>';
-
-        moduleExtras = ' onclick="showModal(' + module.moduleID + ');" data-target="#mModal" ';
+        moduleClickEvent = ' onclick="showModal(' + module.moduleID + ');" data-target="#mModal" ';
+    }
+    else if (module.canFetchData) {
+        notification = '<i class="fas fa-chart-area fa-fw" aria-hidden="true"></i>';
+        moduleClickEvent = ' onclick="showModal(' + module.moduleID + ');" data-target="#mModal" ';
     }
 
     var html = `  <div class="grid-stack-item-content"> 
                         <div class="module module-${module.state.toLowerCase()}">
-                            <div class="module-title"  ${moduleExtras}>
+                            <div class="module-title"  ${moduleClickEvent}>
                                 <div class="notification">${notification}</div>
                                 <h3>${module.moduleName}</h3> 
                             </div>
@@ -151,16 +154,20 @@ function updateWidgetLayout(moduleNo)  {
 
     mData = mData[0];
     notification = '';
-    var moduleExtras = '';
+    var moduleClickEvent = '';
     
     if (mData.alarm) {
-        notification = '<i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i>';      
-        moduleExtras = ' onclick="showModal('+moduleNo+');" data-target="#mModal" ';
+        notification = '<i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i>';
+        moduleClickEvent = ' onclick="showModal(' + moduleNo + ');" data-target="#mModal" ';
+    }
+    else if (mData.canFetchData) {
+        notification = '<i class="fas fa-chart-area fa-fw" aria-hidden="true"></i>';
+        moduleClickEvent = ' onclick="showModal(' + moduleNo + ');" data-target="#mModal" ';
     }
 
     var html = `  <div class="grid-stack-item-content"> 
                         <div class="module module-${mData.state.toLowerCase()}">
-                            <div class="module-title"  ${moduleExtras}>
+                            <div class="module-title"  ${moduleClickEvent}>
                                 <div class="notification">${notification}</div>
                                 <h3>${mData.moduleName}</h3> 
                             </div>
@@ -199,8 +206,16 @@ function getModuleData(moduleNo) {
 function showModal(moduleNo){
      if (editMode) return false;
 
-    $("#mModal .modal-title").html("Module  " + moduleNo + " Info");
-    $("#mModal .modal-body").html("Notification alert message here");
+    if (moduleNo == 4) {
+        //Demo Data
+        $("#mModal .modal-title").html("Module  " + moduleNo + " Data");
+        $("#mModal .modal-body").html('<img src="img/data.jpg" alt="Data">');
+    }
+    else {
+        //Demo Alarm
+        $("#mModal .modal-title").html("Module  " + moduleNo + " Alarm");
+        $("#mModal .modal-body").html('<img src="img/alarm.jpg" alt="Alarm">');
+    }
 
     $("#mModal").modal("show");
    

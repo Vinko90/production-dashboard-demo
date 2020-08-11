@@ -65,6 +65,12 @@ namespace ProductionDashboard.Web.Model
         public bool Alarm { get; set; }
 
         /// <summary>
+        /// Indicate a module that can retrieve statistical data from the server
+        /// </summary>
+        [JsonProperty("CanFetchData")]
+        public bool CanFetchData { get; set; }
+
+        /// <summary>
         /// Default costructor
         /// </summary>
         /// <param name="id">Module unique Id</param>
@@ -82,6 +88,7 @@ namespace ProductionDashboard.Web.Model
             LicensePlate = "59-70AA";
             State = "Connected";
             Alarm = false;
+            CanFetchData = false;
         }
     }
 }
