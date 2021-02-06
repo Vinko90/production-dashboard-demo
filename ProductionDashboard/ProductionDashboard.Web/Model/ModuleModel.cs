@@ -2,8 +2,33 @@
 
 namespace ProductionDashboard.Web.Model
 {
+    /// <summary>
+    /// The ModuleModel class implementation.
+    /// Define the model class containing info for each dashboard module component.
+    /// </summary>
     public class ModuleModel
     {
+        /// <summary>
+        /// Default costructor
+        /// </summary>
+        /// <param name="id">Module unique Id</param>
+        /// <param name="name">Module Name</param>
+        public ModuleModel(int id, string name)
+        {
+            ModuleID = id;
+            ModuleName = name;
+
+            ModuleType = 1;
+            CurrentTray = 0;
+            UpcomingTray = 0;
+            SupplyLot = 1;
+            Farmer = "Vincenzo";
+            LicensePlate = "59-70AA";
+            State = "Connected";
+            Alarm = false;
+            CanFetchData = false;
+        }
+
         /// <summary>
         /// Module unique Id
         /// </summary>
@@ -69,26 +94,5 @@ namespace ProductionDashboard.Web.Model
         /// </summary>
         [JsonProperty("CanFetchData")]
         public bool CanFetchData { get; set; }
-
-        /// <summary>
-        /// Default costructor
-        /// </summary>
-        /// <param name="id">Module unique Id</param>
-        /// <param name="name">Module Name</param>
-        public ModuleModel(int id, string name)
-        {
-            ModuleID = id;
-            ModuleName = name;
-
-            ModuleType = 1;
-            CurrentTray = 0;
-            UpcomingTray = 0;
-            SupplyLot = 1;
-            Farmer = "Vincenzo";
-            LicensePlate = "59-70AA";
-            State = "Connected";
-            Alarm = false;
-            CanFetchData = false;
-        }
     }
 }

@@ -1,22 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <Authors>WarOfDevil</Authors>
-    <Product>Live Production Dashboard</Product>
-    <Version>3.0.0</Version>
+    <Product>LiveProductionDashboard</Product>
+    <Version>4.0.0</Version>
     <PublishReadyToRun>true</PublishReadyToRun>
     <PublishReadyToRunShowWarnings>true</PublishReadyToRunShowWarnings>
     <PublishSingleFile>true</PublishSingleFile>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-    <AssemblyVersion>3.0.0.0</AssemblyVersion>
-    <FileVersion>3.0.0.0</FileVersion>  
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <FileVersion>4.0.0.0</FileVersion>
+    <PackageLicenseExpression>GPL-3.0</PackageLicenseExpression>
+    <PackageId>WoD.ProductionDashboard.Web</PackageId>  
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.6" Condition="'$(Configuration)' == 'Debug'" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.2" Condition="'$(Configuration)' == 'Debug'" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
   </ItemGroup>
 
 </Project>

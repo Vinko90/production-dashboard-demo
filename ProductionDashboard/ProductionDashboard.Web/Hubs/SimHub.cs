@@ -7,14 +7,22 @@ using System.Timers;
 
 namespace ProductionDashboard.Web.Hubs
 {
+    /// <summary>
+    /// The SimHub class implementation.
+    /// Define a SignalR hub that can be used to simulate data coming from the production machines.
+    /// </summary>
     public class SimHub : Hub
     {
-        private IHubContext<SimHub> _hubContext = null;
+        private readonly IHubContext<SimHub> hubContext = null;
         private readonly Timer timer;
 
+        /// <summary>
+        /// Default costructor
+        /// </summary>
+        /// <param name="hubContext">The SignalR hub context</param>
         public SimHub(IHubContext<SimHub> hubContext)
         {
-            _hubContext = hubContext;
+            this.hubContext = hubContext;
             
             timer = new Timer();
             timer.Elapsed += new ElapsedEventHandler(OnTimerTickEvent);
@@ -22,6 +30,12 @@ namespace ProductionDashboard.Web.Hubs
             timer.Enabled = true;
         }
 
+        /// <summary>
+        /// The Timer tick event.
+        /// On each tick it generate random module info, to simulate data coming from a machine.
+        /// </summary>
+        /// <param name="source">Timer object source</param>
+        /// <param name="e">Arguments</param>
         public void OnTimerTickEvent(object source, ElapsedEventArgs e)
         {
             Random rand = new Random();
@@ -46,9 +60,13 @@ namespace ProductionDashboard.Web.Hubs
             if (targetModuleId == 4)
                 mod.CanFetchData = true;
                 
-            _hubContext.Clients.All.SendAsync("ReceivedModuleDataUpdate", mod);
+            hubContext.Clients.All.SendAsync("ReceivedModuleDataUpdate", mod);
         }
 
+        /// <summary>
+        /// Return a list of active modules, that can send data to the dashboard.
+        /// </summary>
+        /// <returns>A list of Modules</returns>
         public async Task RequestModuleList()
         {
             List<ModuleModel> moduleList = new List<ModuleModel>
@@ -62,7 +80,7 @@ namespace ProductionDashboard.Web.Hubs
                 new ModuleModel(7, "MOD-7"){ Alarm = true, State = "Fatal" }
             };
 
-            await _hubContext.Clients.All.SendAsync("ReceiveModuleList", moduleList);
+            await hubContext.Clients.All.SendAsync("ReceiveModuleList", moduleList);
         }
     }
 }

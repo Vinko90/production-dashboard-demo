@@ -7,32 +7,55 @@ using ProductionDashboard.Web.Hubs;
 
 namespace ProductionDashboard.Web
 {
+    /// <summary>
+    /// The Startup class implementation
+    /// </summary>
     public class Startup
     {
-        public IConfiguration Configuration { get; }
-        public IWebHostEnvironment Environment { get; set; }
-
+        /// <summary>
+        /// Default Costructor
+        /// </summary>
+        /// <param name="configuration">Configuration properties</param>
+        /// <param name="env">WebHost environment</param>
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
             Environment = env;
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// Configuration properties
+        /// </summary>
+        public IConfiguration Configuration { get; }
+        
+        /// <summary>
+        /// WebHost environments
+        /// </summary>
+        public IWebHostEnvironment Environment { get; set; }
+
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services">Service collection</param>
         public void ConfigureServices(IServiceCollection services)
         {
             IMvcBuilder builder = services.AddRazorPages();
 
-#if DEBUG
+            #if DEBUG
             if (Environment.IsDevelopment())
             {
                     builder.AddRazorRuntimeCompilation();
             }
-#endif
+            #endif
+
             services.AddSignalR();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app">The application builder</param>
+        /// <param name="env">Webhost environment</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
