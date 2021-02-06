@@ -26,7 +26,7 @@ namespace ProductionDashboard.Web.Hubs
             
             timer = new Timer();
             timer.Elapsed += new ElapsedEventHandler(OnTimerTickEvent);
-            timer.Interval = 2000;
+            timer.Interval = 4000;
             timer.Enabled = true;
         }
 
