@@ -256,11 +256,11 @@ body {
     z-index: 1; /* Stay on top */
     top: 0%; /* Stay at the top */
     left: 0;
-    background-color: #ffffff; 
+    background-color: #ffffff;
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 0px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
-    border: 1px solid #4c4c4c;
+    border: 1px solid #384d70;
     float: left;
     text-align: center;
 }
@@ -282,12 +282,12 @@ body {
 }
 
 .module-list .newWidget {
-    border-top: 1px solid;
+    border-top: 1px solid #384d70;
     padding: 10px 0;
 }
 
 .module-list .newWidget:last-child {
-    border-bottom: 1px solid;
+    border-bottom: 1px solid #384d70;
 }
 
 .module-list a:hover {
@@ -375,11 +375,11 @@ body {
 
 .data-menu {
     border: 1px solid;
-    border-color: #4c4c4c;
+    border-color: #384d70;
     border-right: 0;
     height: 70%;
     width: 250px;
-    z-index: 1; 
+    z-index: 1;
     background-color: #ffffff;
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 10px;

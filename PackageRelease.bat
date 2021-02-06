@@ -26,7 +26,7 @@ echo.
 echo ---- Packaging Release ----
 echo.
 SET "ReleaseFile=ProductionDashboard_%version%.zip"
-CD ProductionDashboard.Web\bin\Release\netcoreapp3.1\win-x64\publish
+CD ProductionDashboard.Web\bin\Release\net5.0\win-x64\publish
 echo start chrome "http://localhost:5000" >> LaunchMe.bat
 echo call ProductionDashboard.Web.exe >> LaunchMe.bat
 CD ..
